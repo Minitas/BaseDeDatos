@@ -1,7 +1,10 @@
 package Proyecto2;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Container;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -26,9 +29,10 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	//Constructor
 	public VentanaPrincipal(){
 	      super();
-	      initGUI();
-	}
-	
+	      initGUI();  	      
+
+}
+
 	private void initGUI() {
 		//preferencias del frame
 		setBounds(200, 100, 800, 600);
