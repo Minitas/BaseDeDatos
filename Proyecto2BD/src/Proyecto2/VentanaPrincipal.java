@@ -1,6 +1,7 @@
 package Proyecto2;
-import javax.swing.JButton;
+import java.awt.BorderLayout;
 
+import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
 
@@ -41,8 +42,8 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	      initGUI();
 	      
 	      consultas = new Consultas();
-	      getContentPane().add(consultas);
-	      consultas.setLocation(0, -12);
+	      consultas.setBounds(0 ,25,300,300);
+	      getContentPane().add(consultas, BorderLayout.NORTH);
 	      this.consultas.setVisible(true);
 	   
 	   
