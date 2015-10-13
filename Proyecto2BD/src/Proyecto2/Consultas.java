@@ -22,6 +22,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
 import quick.dbtable.DBTable;
+
 import java.awt.Font;
 
 
@@ -46,31 +47,10 @@ public class Consultas extends javax.swing.JPanel {
 		setVisible(true);
 		setBackground(Color.PINK);
 		this.setLayout(null);
-//		this.addComponentListener(new ComponentAdapter() {
-//			public void componentHidden(ComponentEvent evt) {
-//				thisComponentHidden(evt);
-//			}
-//			public void componentShown(ComponentEvent evt) {
-//				thisComponentShown(evt);
-//	            }
-//	         });
 		
 		scrConsulta = new JScrollPane();
 		this.add(scrConsulta);
 		
-		
-
-		btnEjecutar = new JButton();
-		btnEjecutar.setFont(new Font("Calibri", Font.BOLD, 14));
-		this.add(btnEjecutar);
-		btnEjecutar.setText("Ejecutar");
-		btnEjecutar.setBounds(659, 42, 103, 28);
-		btnEjecutar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnEjecutarActionPerformed(evt);
-			}
-		});
-
 		botonBorrar = new JButton();
 		botonBorrar.setFont(new Font("Calibri", Font.BOLD, 14));
 		this.add(botonBorrar);
@@ -84,7 +64,7 @@ public class Consultas extends javax.swing.JPanel {
 		txtConsulta.setBounds(57, 11, 564,174);
 		txtConsulta.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 		txtConsulta.setText("SELECT *\n" +
-				"FROM trans_cajas_ahorro \n");
+				"FROM trans_cajas_ahorro; \n");
 		txtConsulta.setFont(new Font("Calibri", Font.PLAIN, 13));
 		txtConsulta.setRows(10);
 		botonBorrar.addActionListener(new ActionListener() {
@@ -93,15 +73,37 @@ public class Consultas extends javax.swing.JPanel {
 			}
 		});
 
-		// crea la tabla  
-		//tabla = new DBTable();
+		btnEjecutar = new JButton();
+		btnEjecutar.setFont(new Font("Calibri", Font.BOLD, 14));
+		this.add(btnEjecutar);
+		btnEjecutar.setText("Ejecutar");
+		btnEjecutar.setBounds(659, 42, 103, 28);
+		btnEjecutar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				btnEjecutarActionPerformed(evt);
+			}
+		});
+
 		
-		// Agrega la tabla al frame
-		//this.add(tabla, BorderLayout.CENTER);           
+		 //crea la tabla  
+		tabla = new DBTable();
+		
+		 //Agrega la tabla al frame
+		this.add(tabla, BorderLayout.CENTER);           
 		
 		// setea la tabla para sólo lectura (no se puede editar su contenido)  
-		//tabla.setEditable(false);       
-		//tabla.setBackground(new java.awt.Color(255,0,255));
+		tabla.setEditable(false);       
+		tabla.setBackground(Color.WHITE);
+		tabla.setBounds(18, 200, 760, 320);
+		
+		addComponentListener(new ComponentAdapter() {
+			public void componentHidden(ComponentEvent evt) {
+				thisComponentHidden(evt);
+			}
+			public void componentShown(ComponentEvent evt) {
+				thisComponentShown(evt);
+	            }
+	         });
 	      
 	}
 
@@ -119,16 +121,17 @@ public class Consultas extends javax.swing.JPanel {
 		   
 	   private void conectarBD(){
 		   try{
+			   System.out.println("por crear\n");
 			   String driver ="com.mysql.jdbc.Driver";
 	        	String servidor = "localhost:3306";
 	            String baseDatos = "banco";
 	            String usuario = "admin";
 	            String clave = "admin";
 	            String uriConexion = "jdbc:mysql://" + servidor + "/" + baseDatos;
-	   
+	   System.out.println("Antes");
 	            //establece una conexión con la  B.D. usando directamante una tabla DBTable    
 	            tabla.connectDatabase(driver, uriConexion, usuario, clave);
-	           
+	            System.out.println("despues");
 		   }
 	       catch (SQLException ex){
 	             JOptionPane.showMessageDialog(this,
@@ -163,7 +166,9 @@ public class Consultas extends javax.swing.JPanel {
 
 	    	  // obtenemos el modelo de la tabla a partir de la consulta para 
 	    	  // modificar la forma en que se muestran de algunas columnas  
-	    	  tabla.createColumnModelFromQuery();    	    
+	    	  System.out.println("tabla antes de create colum model from query es : "+ (tabla==null));
+	    	  tabla.createColumnModelFromQuery();    	  
+	    	  System.out.println("PASEEEE");
 	    	  for (int i = 0; i < tabla.getColumnCount(); i++){ // para que muestre correctamente los valores de tipo TIME (hora)  		   		  
 	    		 if	 (tabla.getColumn(i).getType()==Types.TIME){    		 
 	    		  tabla.getColumn(i).setType(Types.CHAR);  
