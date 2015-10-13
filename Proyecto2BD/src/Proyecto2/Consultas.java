@@ -1,7 +1,9 @@
 package Proyecto2;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.MultipleGradientPaint.ColorSpaceType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -20,129 +22,104 @@ import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
 import quick.dbtable.DBTable;
+import java.awt.Font;
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class Consultas extends javax.swing.JPanel {
 
-	 	
-	   private JTextArea txtConsulta;
-	   private JButton botonBorrar;
-	   private JButton btnEjecutar;
-	   private DBTable tabla;    
-	   private JScrollPane scrConsulta;
-
+	//Atributos
+	private JTextArea txtConsulta;
+	private JButton botonBorrar;
+	private JButton btnEjecutar;
+	private DBTable tabla;    
+	private JScrollPane scrConsulta;
 	   
 	   
-	   public Consultas() 
-	   {
+	public Consultas(){
 	      super();
 	      initGUI();
-	   }
+	}
 	   
-	   private void initGUI() 
-	   {
-	      try {
-	         setPreferredSize(new Dimension(800, 600));
-	         this.setBounds(0, 0, 800, 600);
-	         setVisible(true);
-	         BorderLayout thisLayout = new BorderLayout();
-	         this.setLayout(thisLayout);
-	         this.addComponentListener(new ComponentAdapter() {
-	            public void componentHidden(ComponentEvent evt) {
-	               thisComponentHidden(evt);
-	            }
-	            public void componentShown(ComponentEvent evt) {
-	               thisComponentShown(evt);
-	            }
-	         });
-	         {
-	           
+	private void initGUI(){
+		//setPreferredSize(new Dimension(800, 600));
+		setBounds(0, 25, 800,570);
+		setVisible(true);
+		setBackground(Color.PINK);
+		this.setLayout(null);
+//		this.addComponentListener(new ComponentAdapter() {
+//			public void componentHidden(ComponentEvent evt) {
+//				thisComponentHidden(evt);
+//			}
+//			public void componentShown(ComponentEvent evt) {
+//				thisComponentShown(evt);
+//	            }
+//	         });
+		
+		scrConsulta = new JScrollPane();
+		this.add(scrConsulta);
+		
+		
 
-	            {
-	               scrConsulta = new JScrollPane();
-	               this.add(scrConsulta);
-	               {
-	                  txtConsulta = new JTextArea();
-	                  scrConsulta.setViewportView(txtConsulta);
-	                  txtConsulta.setTabSize(3);
-	                  txtConsulta.setColumns(80);
-	                  txtConsulta.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
-	                  txtConsulta.setText("SELECT *\n" +
-	                                      "FROM trans_cajas_ahorro \n");
-	                  txtConsulta.setFont(new java.awt.Font("Monospaced",0,12));
-	                  txtConsulta.setRows(10);
-	               }
-	            }
-	            {
-	               btnEjecutar = new JButton();
-	               this.add(btnEjecutar);
-	               btnEjecutar.setText("Ejecutar");
-	               btnEjecutar.addActionListener(new ActionListener() {
-	                  public void actionPerformed(ActionEvent evt) {
-	                     btnEjecutarActionPerformed(evt);
-	                  }
-	               });
-	            }
-	            {
-	            	botonBorrar = new JButton();
-	            	this.add(botonBorrar);
-	            	botonBorrar.setText("Borrar");            
-	            	botonBorrar.addActionListener(new ActionListener() {
-	            		public void actionPerformed(ActionEvent arg0) {
-	            		  txtConsulta.setText("");            			
-	            		}
-	            	});
-	            }	
-	         }
-	         {
-	        	// crea la tabla  
-	        	tabla = new DBTable();
-	        	
-	        	// Agrega la tabla al frame
-	            this.add(tabla, BorderLayout.CENTER);           
-	                      
-	           // setea la tabla para sólo lectura (no se puede editar su contenido)  
-	           tabla.setEditable(false);       
-	           tabla.setBackground(new java.awt.Color(255,0,255));
+		btnEjecutar = new JButton();
+		btnEjecutar.setFont(new Font("Calibri", Font.BOLD, 14));
+		this.add(btnEjecutar);
+		btnEjecutar.setText("Ejecutar");
+		btnEjecutar.setBounds(659, 42, 103, 28);
+		btnEjecutar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				btnEjecutarActionPerformed(evt);
+			}
+		});
 
-	         }
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	      }
-	   }
+		botonBorrar = new JButton();
+		botonBorrar.setFont(new Font("Calibri", Font.BOLD, 14));
+		this.add(botonBorrar);
+		
+		botonBorrar.setText("Borrar");
+		botonBorrar.setBounds(659, 104, 103, 28);
+		txtConsulta = new JTextArea();
+		add(txtConsulta);
+		txtConsulta.setTabSize(3);
+		txtConsulta.setColumns(80);
+		txtConsulta.setBounds(57, 11, 564,174);
+		txtConsulta.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
+		txtConsulta.setText("SELECT *\n" +
+				"FROM trans_cajas_ahorro \n");
+		txtConsulta.setFont(new Font("Calibri", Font.PLAIN, 13));
+		txtConsulta.setRows(10);
+		botonBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txtConsulta.setText("");            			
+			}
+		});
 
-	   private void thisComponentShown(ComponentEvent evt) 
-	   {
+		// crea la tabla  
+		//tabla = new DBTable();
+		
+		// Agrega la tabla al frame
+		//this.add(tabla, BorderLayout.CENTER);           
+		
+		// setea la tabla para sólo lectura (no se puede editar su contenido)  
+		//tabla.setEditable(false);       
+		//tabla.setBackground(new java.awt.Color(255,0,255));
+	      
+	}
+
+	   private void thisComponentShown(ComponentEvent evt){
 	      this.conectarBD();
 	   }
 	   
-	   private void thisComponentHidden(ComponentEvent evt) 
-	   {
+	   private void thisComponentHidden(ComponentEvent evt){
 	      this.desconectarBD();
 	   }
 
-	   private void btnEjecutarActionPerformed(ActionEvent evt) 
-	   {
+	   private void btnEjecutarActionPerformed(ActionEvent evt){
 	      this.refrescarTabla();      
 	   }
-	   
-	   private void conectarBD()
-	   {
-	         try
-	         {
-	            String driver ="com.mysql.jdbc.Driver";
+		   
+	   private void conectarBD(){
+		   try{
+			   String driver ="com.mysql.jdbc.Driver";
 	        	String servidor = "localhost:3306";
 	            String baseDatos = "banco";
 	            String usuario = "admin";
@@ -152,9 +129,8 @@ public class Consultas extends javax.swing.JPanel {
 	            //establece una conexión con la  B.D. usando directamante una tabla DBTable    
 	            tabla.connectDatabase(driver, uriConexion, usuario, clave);
 	           
-	         }
-	         catch (SQLException ex)
-	         {
+		   }
+	       catch (SQLException ex){
 	             JOptionPane.showMessageDialog(this,
 	                                           "Se produjo un error al intentar conectarse a la base de datos.\n" + ex.getMessage(),
 	                                           "Error",
@@ -163,46 +139,38 @@ public class Consultas extends javax.swing.JPanel {
 	            System.out.println("SQLState: " + ex.getSQLState());
 	            System.out.println("VendorError: " + ex.getErrorCode());
 	         }
-	         catch (ClassNotFoundException e)
-	         {
+	         catch (ClassNotFoundException e){
 	            e.printStackTrace();
 	         }
 	      
 	   }
 
-	   private void desconectarBD()
-	   {
-	         try
-	         {
+	   private void desconectarBD(){
+	         try{
 	            tabla.close();            
 	         }
-	         catch (SQLException ex)
-	         {
+	         catch (SQLException ex){
 	            System.out.println("SQLException: " + ex.getMessage());
 	            System.out.println("SQLState: " + ex.getSQLState());
 	            System.out.println("VendorError: " + ex.getErrorCode());
 	         }      
 	   }
 
-	   private void refrescarTabla()
-	   {
-	      try
-	      {    
+	   private void refrescarTabla(){
+	      try{    
 	    	  // seteamos la consulta a partir de la cual se obtendrán los datos para llenar la tabla
 	    	  tabla.setSelectSql(this.txtConsulta.getText().trim());
 
 	    	  // obtenemos el modelo de la tabla a partir de la consulta para 
 	    	  // modificar la forma en que se muestran de algunas columnas  
 	    	  tabla.createColumnModelFromQuery();    	    
-	    	  for (int i = 0; i < tabla.getColumnCount(); i++)
-	    	  { // para que muestre correctamente los valores de tipo TIME (hora)  		   		  
-	    		 if	 (tabla.getColumn(i).getType()==Types.TIME)  
-	    		 {    		 
+	    	  for (int i = 0; i < tabla.getColumnCount(); i++){ // para que muestre correctamente los valores de tipo TIME (hora)  		   		  
+	    		 if	 (tabla.getColumn(i).getType()==Types.TIME){    		 
 	    		  tabla.getColumn(i).setType(Types.CHAR);  
 	  	       	 }
+	    		 
 	    		 // cambiar el formato en que se muestran los valores de tipo DATE
-	    		 if	 (tabla.getColumn(i).getType()==Types.DATE)
-	    		 {
+	    		 if	 (tabla.getColumn(i).getType()==Types.DATE){
 	    		    tabla.getColumn(i).setDateFormat("dd/MM/YYYY");
 	    		 }
 	          }  
@@ -212,11 +180,9 @@ public class Consultas extends javax.swing.JPanel {
 	    	  // resultado en un resultSet, esto lo hace automáticamente la tabla (DBTable) a 
 	    	  // patir  de  la conexión y la consulta seteadas con connectDatabase() y setSelectSql() respectivamente.
 	          
-	    	  
-	    	  
+
 	       }
-	      catch (SQLException ex)
-	      {
+	      catch (SQLException ex){
 	         // en caso de error, se muestra la causa en la consola
 	         System.out.println("SQLException: " + ex.getMessage());
 	         System.out.println("SQLState: " + ex.getSQLState());
@@ -225,7 +191,6 @@ public class Consultas extends javax.swing.JPanel {
 	                                       ex.getMessage() + "\n", 
 	                                       "Error al ejecutar la consulta.",
 	                                       JOptionPane.ERROR_MESSAGE);
-	         
 	      }
 	      
 	   }
