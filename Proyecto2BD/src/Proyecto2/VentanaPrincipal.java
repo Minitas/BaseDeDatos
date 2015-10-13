@@ -1,84 +1,82 @@
 package Proyecto2;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.Container;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import java.awt.Font;
 
 
-
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class VentanaPrincipal extends javax.swing.JFrame  {
+	
+	//Atributos
+	
+	//Botones
 	private JButton BotonConsultas;
 	private JButton BotonCajero;
 	private JButton BotonPrestamo;
 	
+	//Paneles
+	private Container contentPane;
+	private JPanel panelPrincipal;
 	private Consultas consultas;
-
-	public static void main(String[] args) {
-	      SwingUtilities.invokeLater(new Runnable() {
-	         public void run() {
-	            VentanaPrincipal inst = new VentanaPrincipal();
-	            inst.setLocationRelativeTo(null);
-	            inst.setVisible(true);
-	         }
-	      });
-	   
-	}
 	
+
+	//Constructor
 	public VentanaPrincipal(){
 	      super();
-	      
-	      initGUI();
-	      
-	      consultas = new Consultas();
-	      consultas.setBounds(0 ,25,300,300);
-	      getContentPane().add(consultas, BorderLayout.NORTH);
-	      this.consultas.setVisible(true);
-	   
-	   
-	      
+	      initGUI();  	      
 
 }
+
 	private void initGUI() {
-		try {
-			{
-				getContentPane().setLayout(null);
-				this.setSize(651, 477);
-				this.setTitle("Banco");
-				{
-					BotonConsultas = new JButton();
-					getContentPane().add(BotonConsultas);
-					BotonConsultas.setText("Consultar");
-					BotonConsultas.setBounds(0, 0, 201, 23);
-					BotonConsultas.setSize(211, 23);
-				}
-				{
-					BotonCajero = new JButton();
-					getContentPane().add(BotonCajero);
-					BotonCajero.setText("Cajero automatico");
-					BotonCajero.setBounds(212, 0, 212, 23);
-				}
-				{
-					BotonPrestamo = new JButton();
-					getContentPane().add(BotonPrestamo);
-					BotonPrestamo.setText("Administrar Prestamo");
-					BotonPrestamo.setBounds(424, 0, 211, 23);
-				}
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		//preferencias del frame
+		setBounds(200, 100, 800, 600);
+		setTitle("Banco");
+		setResizable(false);
+		
+		contentPane= getContentPane();
+		contentPane.setLayout(null);
+		
+		panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(null);
+		panelPrincipal.setVisible(true);
+		panelPrincipal.setBounds(0, 0, 800, 600);
+		contentPane.add(panelPrincipal);
+		
+		BotonConsultas = new JButton();
+		BotonConsultas.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelPrincipal.add(BotonConsultas);
+		BotonConsultas.setText("Consultar");
+		BotonConsultas.setBounds(20, 5, 182, 23);
+		BotonConsultas.setSize(211, 23);
+	
+		BotonCajero = new JButton();
+		BotonCajero.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelPrincipal.add(BotonCajero);
+		BotonCajero.setText("Cajero automatico");
+		BotonCajero.setBounds(289, 5, 212, 23);
+	
+		BotonPrestamo = new JButton();
+		BotonPrestamo.setFont(new Font("Calibri", Font.BOLD, 14));
+		panelPrincipal.add(BotonPrestamo);
+		BotonPrestamo.setText("Administrar Prestamo");
+		BotonPrestamo.setBounds(544, 5, 211, 23);
+		
+		//Creo el panel consultas
+		crearConsultas();
+		
+	}
+	
+	public void crearConsultas(){
+		consultas = new Consultas();
+		consultas.setLocation(0, 34);
+	    panelPrincipal.add(consultas);
+	    this.consultas.setVisible(true);	
 	}
 	
 }	
