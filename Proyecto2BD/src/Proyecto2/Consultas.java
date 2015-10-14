@@ -42,21 +42,22 @@ public class Consultas extends javax.swing.JPanel {
 	}
 	   
 	private void initGUI(){
+		 try {
 		//setPreferredSize(new Dimension(800, 600));
 		setBounds(0, 25, 800,570);
 		setVisible(true);
 		setBackground(Color.PINK);
 		this.setLayout(null);
 		
-		scrConsulta = new JScrollPane();
-		this.add(scrConsulta);
-		
 		botonBorrar = new JButton();
 		botonBorrar.setFont(new Font("Calibri", Font.BOLD, 14));
 		this.add(botonBorrar);
-		
 		botonBorrar.setText("Borrar");
 		botonBorrar.setBounds(659, 104, 103, 28);
+		
+		scrConsulta = new JScrollPane();
+		add(scrConsulta);
+		
 		txtConsulta = new JTextArea();
 		add(txtConsulta);
 		txtConsulta.setTabSize(3);
@@ -64,9 +65,10 @@ public class Consultas extends javax.swing.JPanel {
 		txtConsulta.setBounds(57, 11, 564,174);
 		txtConsulta.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
 		txtConsulta.setText("SELECT *\n" +
-				"FROM trans_cajas_ahorro; \n");
+				"FROM trans_cajas_ahorro\n");
 		txtConsulta.setFont(new Font("Calibri", Font.PLAIN, 13));
 		txtConsulta.setRows(10);
+		
 		botonBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txtConsulta.setText("");            			
@@ -80,7 +82,7 @@ public class Consultas extends javax.swing.JPanel {
 		btnEjecutar.setBounds(659, 42, 103, 28);
 		btnEjecutar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				btnEjecutarActionPerformed(evt);
+				refrescarTabla();
 			}
 		});
 
@@ -91,34 +93,22 @@ public class Consultas extends javax.swing.JPanel {
 		 //Agrega la tabla al frame
 		this.add(tabla, BorderLayout.CENTER);           
 		
-		// setea la tabla para sólo lectura (no se puede editar su contenido)  
-		tabla.setEditable(false);       
+		// setea la tabla para sólo lectura (no se puede editar su contenido)         
+		tabla.setEditable(false);
 		tabla.setBackground(Color.WHITE);
 		tabla.setBounds(18, 200, 760, 320);
-		
-		addComponentListener(new ComponentAdapter() {
-			public void componentHidden(ComponentEvent evt) {
-				thisComponentHidden(evt);
-			}
-			public void componentShown(ComponentEvent evt) {
-				thisComponentShown(evt);
-	            }
-	         });
-	      
+	    
+		conectarBD();
+	} catch (Exception e) {
+        e.printStackTrace();
+     }
 	}
 
-	   private void thisComponentShown(ComponentEvent evt){
-	      this.conectarBD();
-	   }
-	   
+	 
 	   private void thisComponentHidden(ComponentEvent evt){
 	      this.desconectarBD();
 	   }
 
-	   private void btnEjecutarActionPerformed(ActionEvent evt){
-	      this.refrescarTabla();      
-	   }
-		   
 	   private void conectarBD(){
 		   try{
 			   System.out.println("por crear\n");
