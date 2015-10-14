@@ -139,24 +139,29 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 	   }
 	   
 	   private void BotonPINActionPerformed(ActionEvent evt) {
+		   //Obtengo datos pin y tarjeta
 		  String pin= TextPIN.getText();
-		  PIN= Integer.parseInt(pin);
-		  
 		  String nroTarjeta= TextTarjeta.getText();
-		   NroTarjeta= Integer.parseInt(nroTarjeta);
 		  
-		  //verificar si el pin es valido para la tarjeta
-		  if(false){
-			  
-		  }else{
-			  JOptionPane.showMessageDialog(null, "El numero de tarjeta no coincide con el PIN", "Datos invalidos", JOptionPane.ERROR_MESSAGE);
+		  if(pin.equals(" Ingrese numero PIN") | nroTarjeta.equals(" Ingrese numero tarjeta")){
+			  JOptionPane.showMessageDialog(null, "Ingrese numero de tarjeta y PIN", "Datos invalidos", JOptionPane.ERROR_MESSAGE);
 			  TextTarjeta.setText(" Ingrese numero tarjeta");
 			  TextPIN.setText(" Ingrese numero PIN");
+		  }else{
+			  PIN= Integer.parseInt(pin);
+			  NroTarjeta= Integer.parseInt(nroTarjeta);
+			  
+			  //verificar si el pin es valido para la tarjeta
+			  if(false){
+				  //aca van a ir las opciones
+				  System.out.println("holii");
+			  }else{
+				  JOptionPane.showMessageDialog(null, "El numero de tarjeta no coincide con el PIN", "Datos invalidos", JOptionPane.ERROR_MESSAGE);
+				  TextTarjeta.setText(" Ingrese numero tarjeta");
+				  TextPIN.setText(" Ingrese numero PIN");
+			  }
 		  }
-		  
-		  
-		  
-		  System.out.println(PIN);
+
 	   }
 
 	   private void TextPINMouseClicked(MouseEvent evt) {
