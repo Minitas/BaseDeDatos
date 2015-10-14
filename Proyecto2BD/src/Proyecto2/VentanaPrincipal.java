@@ -11,6 +11,14 @@ import javax.swing.SwingUtilities;
 import java.awt.Font;
 
 
+
+
+import java.awt.event.ActionEvent;
+
+import java.awt.event.ActionListener;
+
+
+
 public class VentanaPrincipal extends javax.swing.JFrame  {
 	
 	//Atributos
@@ -24,6 +32,7 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	private Container contentPane;
 	private JPanel panelPrincipal;
 	private Consultas consultas;
+	private CajeroAutomatico cajero;
 	
 
 	//Constructor
@@ -54,21 +63,42 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 		BotonConsultas.setText("Consultar");
 		BotonConsultas.setBounds(20, 5, 182, 23);
 		BotonConsultas.setSize(211, 23);
+		BotonConsultas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				BotonConsultasActionPerformed(evt);
+			}
+		});
+
+
+
 	
 		BotonCajero = new JButton();
 		BotonCajero.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelPrincipal.add(BotonCajero);
 		BotonCajero.setText("Cajero automatico");
 		BotonCajero.setBounds(289, 5, 212, 23);
+		BotonCajero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				BotonCajeroActionPerformed(evt);
+			}
+		});
 	
 		BotonPrestamo = new JButton();
 		BotonPrestamo.setFont(new Font("Calibri", Font.BOLD, 14));
 		panelPrincipal.add(BotonPrestamo);
 		BotonPrestamo.setText("Administrar Prestamo");
 		BotonPrestamo.setBounds(544, 5, 211, 23);
+		BotonPrestamo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				BotonPrestamoActionPerformed(evt);
+			}
+		});
 		
 		//Creo el panel consultas
 		crearConsultas();
+		
+		//Creo el panel cajero automatico
+		cajeroAutomatico();
 		
 	}
 	
@@ -76,7 +106,35 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 		consultas = new Consultas();
 		consultas.setLocation(0, 34);
 	    panelPrincipal.add(consultas);
-	    this.consultas.setVisible(true);	
+	    consultas.setVisible(false);
 	}
+	
+	public void cajeroAutomatico(){
+		cajero = new CajeroAutomatico();
+		consultas.setLocation(0, 34);
+	    panelPrincipal.add(cajero);
+	    consultas.setVisible(false);
+	}
+
+	private void BotonConsultasActionPerformed(ActionEvent evt) {
+		consultas.setVisible(true);	
+		cajero.setVisible(false);
+		System.out.println("BotonConsultas.actionPerformed, event="+evt);
+
+	}
+
+	private void BotonCajeroActionPerformed(ActionEvent evt) {
+		consultas.setVisible(false);
+		cajero.setVisible(true);
+		System.out.println("BotonCajero.actionPerformed, event="+evt);
+
+	}
+
+	private void BotonPrestamoActionPerformed(ActionEvent evt) {
+//		consultas.setVisible(true);	
+//		System.out.println("BotonPrestamo.actionPerformed, event="+evt);
+
+	}
+	
 	
 }	
