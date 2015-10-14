@@ -55,6 +55,7 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 		panelPrincipal.setLayout(null);
 		panelPrincipal.setVisible(true);
 		panelPrincipal.setBounds(0, 0, 800, 600);
+		panelPrincipal.setBackground(Color.WHITE);
 		contentPane.add(panelPrincipal);
 		
 		BotonConsultas = new JButton();

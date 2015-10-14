@@ -58,7 +58,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 	private void initGUI(){
 		 try {
 		//setPreferredSize(new Dimension(800, 600));
-		this.setBounds(0, 0, 800, 570);
+		setBounds(0, 30, 800,570);
 		setVisible(false);
 		this.setBackground(new java.awt.Color(230,255,255));
 		setLayout(null);

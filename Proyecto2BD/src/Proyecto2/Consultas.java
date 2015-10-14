@@ -43,7 +43,7 @@ public class Consultas extends javax.swing.JPanel {
 	   
 	private void initGUI(){
 		 try {
-		//setPreferredSize(new Dimension(800, 600));
+		
 		setBounds(0, 25, 800,570);
 		setVisible(true);
 		setBackground(Color.PINK);
