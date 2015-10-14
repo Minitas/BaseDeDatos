@@ -67,7 +67,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 		BotonAcceder = new JButton();
 		add(BotonAcceder);
 		BotonAcceder.setText("Acceder");
-		BotonAcceder.setBounds(350, 280, 103, 28);
+		BotonAcceder.setBounds(365, 280, 103, 28);
 		BotonAcceder.setFont(new Font("Calibri", Font.BOLD, 14));
 		BotonAcceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -78,7 +78,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 
 		//text fields
 		TextPIN = new JTextField();
-		TextPIN.setText("Ingrese numero PIN");
+		TextPIN.setText(" Ingrese numero PIN");
 		TextPIN.setBounds(290, 200, 250, 23);
 		add(TextPIN);
 		TextPIN.addMouseListener(new MouseAdapter() {
@@ -88,7 +88,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 		});
 
 		TextTarjeta = new JTextField();
-		TextTarjeta.setText("Ingrese numero tarjeta");
+		TextTarjeta.setText(" Ingrese numero tarjeta");
 		TextTarjeta.setBounds(290, 150, 250, 23);
 		add(TextTarjeta);
 		
