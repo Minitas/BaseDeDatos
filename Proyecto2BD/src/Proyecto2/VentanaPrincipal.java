@@ -39,8 +39,7 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	public VentanaPrincipal(){
 	      super();
 	      initGUI();  	      
-
-}
+	}
 
 	private void initGUI() {
 		//preferencias del frame
@@ -120,15 +119,11 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	private void BotonConsultasActionPerformed(ActionEvent evt) {
 		consultas.setVisible(true);	
 		cajero.setVisible(false);
-		System.out.println("BotonConsultas.actionPerformed, event="+evt);
-
 	}
 
 	private void BotonCajeroActionPerformed(ActionEvent evt) {
 		consultas.setVisible(false);
 		cajero.setVisible(true);
-		System.out.println("BotonCajero.actionPerformed, event="+evt);
-
 	}
 
 	private void BotonPrestamoActionPerformed(ActionEvent evt) {

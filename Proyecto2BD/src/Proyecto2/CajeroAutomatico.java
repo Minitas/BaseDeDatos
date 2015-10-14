@@ -146,6 +146,13 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 		   NroTarjeta= Integer.parseInt(nroTarjeta);
 		  
 		  //verificar si el pin es valido para la tarjeta
+		  if(false){
+			  
+		  }else{
+			  JOptionPane.showMessageDialog(null, "El numero de tarjeta no coincide con el PIN", "Datos invalidos", JOptionPane.ERROR_MESSAGE);
+			  TextTarjeta.setText(" Ingrese numero tarjeta");
+			  TextPIN.setText(" Ingrese numero PIN");
+		  }
 		  
 		  
 		  

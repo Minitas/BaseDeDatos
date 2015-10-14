@@ -2,12 +2,11 @@ package Proyecto2;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.MultipleGradientPaint.ColorSpaceType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -18,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
 import quick.dbtable.DBTable;
@@ -39,15 +37,26 @@ public class Consultas extends javax.swing.JPanel {
 	public Consultas(){
 	      super();
 	      initGUI();
+	      //conectarBD();
 	}
 	   
 	private void initGUI(){
-		 try {
-		
+
 		setBounds(0, 25, 800,570);
 		setVisible(true);
 		setBackground(Color.PINK);
 		this.setLayout(null);
+		
+		addComponentListener(new ComponentAdapter() {
+            public void componentHidden(ComponentEvent evt) {
+               thisComponentHidden(evt);
+            }
+            public void componentShown(ComponentEvent evt) {
+               thisComponentShown(evt);
+            }
+         });
+		
+		
 		
 		botonBorrar = new JButton();
 		botonBorrar.setFont(new Font("Calibri", Font.BOLD, 14));
@@ -64,8 +73,7 @@ public class Consultas extends javax.swing.JPanel {
 		txtConsulta.setColumns(80);
 		txtConsulta.setBounds(57, 11, 564,174);
 		txtConsulta.setBorder(BorderFactory.createEtchedBorder(BevelBorder.LOWERED));
-		txtConsulta.setText("SELECT *\n" +
-				"FROM trans_cajas_ahorro\n");
+		txtConsulta.setText("SELECT *\n FROM trans_cajas_ahorro\n");
 		txtConsulta.setFont(new Font("Calibri", Font.PLAIN, 13));
 		txtConsulta.setRows(10);
 		
@@ -77,7 +85,7 @@ public class Consultas extends javax.swing.JPanel {
 
 		btnEjecutar = new JButton();
 		btnEjecutar.setFont(new Font("Calibri", Font.BOLD, 14));
-		this.add(btnEjecutar);
+		add(btnEjecutar);
 		btnEjecutar.setText("Ejecutar");
 		btnEjecutar.setBounds(659, 42, 103, 28);
 		btnEjecutar.addActionListener(new ActionListener() {
@@ -86,7 +94,6 @@ public class Consultas extends javax.swing.JPanel {
 			}
 		});
 
-		
 		 //crea la tabla  
 		tabla = new DBTable();
 		
@@ -98,36 +105,37 @@ public class Consultas extends javax.swing.JPanel {
 		tabla.setBackground(Color.WHITE);
 		tabla.setBounds(18, 200, 760, 320);
 	    
-		conectarBD();
-	} catch (Exception e) {
-        e.printStackTrace();
-     }
 	}
 
 	 
 	   private void thisComponentHidden(ComponentEvent evt){
-	      this.desconectarBD();
+	      desconectarBD();
 	   }
+	   
+	   private void thisComponentShown(ComponentEvent evt){
+		      conectarBD();
+		   }
 
 	   private void conectarBD(){
 		   try{
 			   System.out.println("por crear\n");
+			   
 			   String driver ="com.mysql.jdbc.Driver";
 	        	String servidor = "localhost:3306";
 	            String baseDatos = "banco";
 	            String usuario = "admin";
 	            String clave = "admin";
 	            String uriConexion = "jdbc:mysql://" + servidor + "/" + baseDatos;
-	   System.out.println("Antes");
+	            
+	            System.out.println("Antes");
+	            
 	            //establece una conexión con la  B.D. usando directamante una tabla DBTable    
 	            tabla.connectDatabase(driver, uriConexion, usuario, clave);
+	            
 	            System.out.println("despues");
 		   }
 	       catch (SQLException ex){
-	             JOptionPane.showMessageDialog(this,
-	                                           "Se produjo un error al intentar conectarse a la base de datos.\n" + ex.getMessage(),
-	                                           "Error",
-	                                           JOptionPane.ERROR_MESSAGE);
+	             JOptionPane.showMessageDialog(this, "Se produjo un error al intentar conectarse a la base de datos.\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 	            System.out.println("SQLException: " + ex.getMessage());
 	            System.out.println("SQLState: " + ex.getSQLState());
 	            System.out.println("VendorError: " + ex.getErrorCode());
@@ -152,7 +160,7 @@ public class Consultas extends javax.swing.JPanel {
 	   private void refrescarTabla(){
 	      try{    
 	    	  // seteamos la consulta a partir de la cual se obtendrán los datos para llenar la tabla
-	    	  tabla.setSelectSql(this.txtConsulta.getText().trim());
+	    	  tabla.setSelectSql(txtConsulta.getText().trim());
 
 	    	  // obtenemos el modelo de la tabla a partir de la consulta para 
 	    	  // modificar la forma en que se muestran de algunas columnas  
@@ -182,10 +190,7 @@ public class Consultas extends javax.swing.JPanel {
 	         System.out.println("SQLException: " + ex.getMessage());
 	         System.out.println("SQLState: " + ex.getSQLState());
 	         System.out.println("VendorError: " + ex.getErrorCode());
-	         JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(this),
-	                                       ex.getMessage() + "\n", 
-	                                       "Error al ejecutar la consulta.",
-	                                       JOptionPane.ERROR_MESSAGE);
+	         JOptionPane.showMessageDialog(SwingUtilities.getWindowAncestor(this), ex.getMessage() + "\n", "Error al ejecutar la consulta.", JOptionPane.ERROR_MESSAGE);
 	      }
 	      
 	   }
