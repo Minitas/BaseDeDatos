@@ -58,7 +58,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 	private void initGUI(){
 		 try {
 		//setPreferredSize(new Dimension(800, 600));
-		setBounds(0, 30, 800,570);
+		setBounds(0, 35, 800,570);
 		setVisible(false);
 		this.setBackground(new java.awt.Color(230,255,255));
 		setLayout(null);
@@ -79,7 +79,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 		//text fields
 		TextPIN = new JTextField();
 		TextPIN.setText("Ingrese numero PIN");
-		TextPIN.setBounds(290, 150, 250, 23);
+		TextPIN.setBounds(290, 200, 250, 23);
 		add(TextPIN);
 		TextPIN.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
@@ -89,7 +89,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 
 		TextTarjeta = new JTextField();
 		TextTarjeta.setText("Ingrese numero tarjeta");
-		TextTarjeta.setBounds(290, 200, 250, 23);
+		TextTarjeta.setBounds(290, 150, 250, 23);
 		add(TextTarjeta);
 		
 		TextTarjeta.addMouseListener(new MouseAdapter() {
