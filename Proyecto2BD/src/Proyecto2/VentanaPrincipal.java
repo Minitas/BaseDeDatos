@@ -39,8 +39,7 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	public VentanaPrincipal(){
 	      super();
 	      initGUI();  	      
-
-}
+	}
 
 	private void initGUI() {
 		//preferencias del frame
