@@ -37,7 +37,7 @@ public class Consultas extends javax.swing.JPanel {
 	public Consultas(){
 	      super();
 	      initGUI();
-	      //conectarBD();
+	      
 	}
 	   
 	private void initGUI(){
@@ -114,7 +114,7 @@ public class Consultas extends javax.swing.JPanel {
 	   
 	   private void thisComponentShown(ComponentEvent evt){
 		      conectarBD();
-		   }
+	   }
 
 	   private void conectarBD(){
 		   try{
