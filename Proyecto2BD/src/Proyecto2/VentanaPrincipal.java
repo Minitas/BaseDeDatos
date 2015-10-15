@@ -107,6 +107,7 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 		
 	}
 	
+	
 	public void crearConsultas(){
 		consultas = new Consultas();
 		consultas.setLocation(0, 34);
