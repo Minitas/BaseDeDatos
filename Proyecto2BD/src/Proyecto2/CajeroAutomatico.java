@@ -1,5 +1,6 @@
 package Proyecto2;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -9,10 +10,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import javax.swing.BorderFactory;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -24,18 +24,6 @@ import javax.swing.JTextField;
 import quick.dbtable.DBTable;
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 public class CajeroAutomatico extends javax.swing.JPanel{
 
 	private DBTable tablaMovimientos;    
@@ -44,7 +32,7 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 	private JPasswordField jPasswordField1;
 	
 	private JLabel LabelTarjeta;
-	private JComboBox Menu;
+	private JComboBox<String> Menu;
 	private JLabel LabelPin;
 	private JLabel titulo;
 	
@@ -52,10 +40,10 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 	
 	private JButton BotonAcceder;
 	private int NroTarjeta;
-	private JTextField TextSaldo;
+	private JLabel LabelSaldo;
 	private int PIN;
 	
-	private ComboBoxModel MenuModel;
+	private ComboBoxModel<String> MenuModel;
 	   
 	//para conexion base de datos
 	private java.sql.Connection cnx;
@@ -97,7 +85,12 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 			}
 		});
 
-		
+		//Tabla movimientos
+		tablaMovimientos= new DBTable();
+		tablaMovimientos.setBounds(50, 160, 700, 350);    
+		tablaMovimientos.setBackground(Color.WHITE);
+		tablaMovimientos.setVisible(false);
+		add(tablaMovimientos, BorderLayout.CENTER);   
 
 		//text field tarjeta		
 		TextTarjeta = new JTextField();
@@ -109,17 +102,6 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 				TextTarjetaMouseClicked(evt);
 			}
 		});
-		
-
-		TextSaldo = new JTextField();
-		TextSaldo.setBounds(414, 138, 116, 23);
-		TextSaldo.setVisible(false);
-		TextSaldo.setBackground(new java.awt.Color(230,255,255));
-		add(TextSaldo);
-		TextSaldo.setBorder(BorderFactory.createCompoundBorder(
-				null, 
-				null));
-		TextSaldo.setFont(new java.awt.Font("Calibri",0,16));
 
 		//Labels
 		LabelPin = new JLabel();
@@ -132,6 +114,13 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 		LabelTarjeta.setBounds(245, 150, 46, 16);
 		add(LabelTarjeta);
 		
+		LabelSaldo = new JLabel();
+		this.add(LabelSaldo);
+		LabelSaldo.setText("Saldo");
+		LabelSaldo.setVisible(false);
+		LabelSaldo.setBounds(320, 161, 93, 26);
+		LabelSaldo.setFont(new java.awt.Font("Calibri",0,18));
+
 		//password
 		 jPasswordField1 = new JPasswordField();
 		 jPasswordField1.setText("");
@@ -149,20 +138,25 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 		this.add(titulo);
 		
 		titulo.setText("CAJERO AUTOMATICO");
-		titulo.setBounds(200, 60, 600, 60);
+		titulo.setBounds(176, 52, 600, 58);
 		titulo.setFont(new java.awt.Font("Calibri",1,50));
 		titulo.setBackground(Color.MAGENTA);
 		titulo.setForeground(new java.awt.Color(0,170,170));
 		
-		MenuModel = 
-				new DefaultComboBoxModel(
-						new String[] { "Consultar Saldo", "Ultimos movimientos", "Movimientos por Periodo" });
-		Menu = new JComboBox();
+		MenuModel = new DefaultComboBoxModel<String>(new String[] {"Consultar Saldo", "Ultimos movimientos", "Movimientos por Periodo" });
+		Menu = new JComboBox<String>();
 		add(Menu);
 		Menu.setVisible(false);
 		Menu.setModel(MenuModel);
-		Menu.setBounds(302, 60, 24, 23);
+		Menu.setSelectedIndex(-1);
 		Menu.setPreferredSize(new java.awt.Dimension(70, 23));
+		Menu.setBounds(300, 120,200,30);
+		Menu.setBackground(new java.awt.Color(255,255,255));		
+		Menu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				MenuActionPerformed(evt);
+			}
+		});
 
 		 } catch (Exception e) {
 			 e.printStackTrace();
@@ -252,8 +246,6 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 					
 					//Agregar menu
 					Menu.setVisible(true);
-					TextSaldo.setVisible(true);
-					TextSaldo.setText("Holiiiiiiiii");
 					//add(tablaMovimientos);
 					//tablaMovimientos.setVisible(true);
 					
@@ -281,12 +273,90 @@ public class CajeroAutomatico extends javax.swing.JPanel{
 	
 	private void BotonSaldoActionPerformed(ActionEvent evt) {
 		System.out.println("BotonSaldo.actionPerformed, event="+evt);
-		//TODO add your code for BotonSaldo.actionPerformed
+		
 	}
 	
 	private void BotonMovActionPerformed(ActionEvent evt) {
 		System.out.println("BotonMov.actionPerformed, event="+evt);
-		//TODO add your code for BotonMov.actionPerformed
+		
+	}
+	
+	private void MenuActionPerformed(ActionEvent evt) {
+		String opcion= (String)Menu.getSelectedItem();
+		 
+		switch (opcion) {
+		case "Consultar Saldo":
+			System.out.println("SALdoooo");  
+			java.sql.Statement stmt;
+			String saldo="";
+			String text=  "Su saldo es $";
+			
+			//se crea una sentencia jdbc para realizar la consulta
+			try {
+				stmt = cnx.createStatement();
+				
+				System.out.println("Base de datos conectada \n");
+				
+				//se prepara el string SQL de la consulta
+				String sql= "SELECT DSTINCT saldo"
+						+ "	FROM Tarjeta, Cliente_CA, Caja_Ahorro"
+						+ "WHERE Tarjeta.nro_cliente=Cliente_CA.nro_cliente and Tarjeta.nro_ca=Cliente_CA.nro_Ca and Caja_ahorro.nro_ca=Cliente_CA.nro_ca and Tarjeta.nro_tarjeta=NroTarjeta" ;
+				
+				//se ejecuta la sentencia y se recibe un resultado
+			/*	java.sql.ResultSet rs = stmt.executeQuery(sql);
+				
+				while(rs.next()){
+					saldo = rs.getString("PIN");
+				}
+				rs.close();
+				stmt.close();*/
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			text+= saldo;
+			LabelSaldo.setText(text);
+			LabelSaldo.setVisible(true);
+			tablaMovimientos.setVisible(false);
+			break;
+		case "Ultimos movimientos":
+			System.out.println("movimientosssssss\n");    
+			LabelSaldo.setVisible(false);
+			tablaMovimientos.setVisible(true);
+			try {
+				stmt = cnx.createStatement();
+				
+				System.out.println("Base de datos conectada \n");
+				
+				//se prepara el string SQL de la consulta
+				String sql= "SELECT DSTINCT fecha, hora, tipo, monto, nro_tarjeta, cod_caja, cadestino"
+						+ "	FROM trans_cajas_ahorro, Tarjeta, Cliente_CA"
+						+ "WHERE trans_cajas_ahorro.nro_cliente=Cliente_CA.nro_cliente and Cliente_CA.nro_cliente=Tarjeta.nro_cliente and nro_tarjeta= NroTarjeta"
+						+ "order by fecha DESC" ;
+				
+				//se ejecuta la sentencia y se recibe un resultado
+			/*	java.sql.ResultSet rs = stmt.executeQuery(sql);
+				int cant=0;
+				while(rs.next() and cant<0){
+					saldo = rs.getString("PIN");
+					cant++;
+				}
+				rs.close();
+				stmt.close();*/
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			  
+			
+			break;
+		case "Movimientos por Periodo":
+			System.out.println("Movimientos por periodo\n");
+			LabelSaldo.setVisible(false);
+			tablaMovimientos.setVisible(false);
+			
+			break;                        
+		}
+         
+		
 	}
 
 }

@@ -24,6 +24,19 @@ import quick.dbtable.DBTable;
 import java.awt.Font;
 
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class Consultas extends javax.swing.JPanel {
 
 	//Atributos
@@ -42,9 +55,9 @@ public class Consultas extends javax.swing.JPanel {
 	   
 	private void initGUI(){
 
-		setBounds(0, 25, 800,570);
+		this.setBounds(0, 0, 800, 570);
 		setVisible(true);
-		setBackground(Color.PINK);
+		this.setBackground(new java.awt.Color(255,215,215));
 		this.setLayout(null);
 		
 		addComponentListener(new ComponentAdapter() {
