@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -24,11 +25,13 @@ public class AdministrarPrestamos extends javax.swing.JPanel{
 
 	private JTextField textLegajo;
 	private JPasswordField fieldPassword;
-	private JButton BotonAcceder;
+	private JButton botonAcceder;
 	
 	private JLabel labelLegajo;
 	private JLabel labelPassword;
 	private JLabel titulo;	
+	
+	private JComboBox menu;
 	   
 	//para conexion base de datos
 	private java.sql.Connection cnx;
@@ -63,14 +66,14 @@ public class AdministrarPrestamos extends javax.swing.JPanel{
 		this.add(titulo);
 		
 		//Botones
-		BotonAcceder = new JButton();
-		add(BotonAcceder);
-		BotonAcceder.setText("Acceder");
-		BotonAcceder.setBounds(363, 258, 103, 28);
-		BotonAcceder.setFont(new Font("Calibri", Font.BOLD, 14));
-		BotonAcceder.addActionListener(new ActionListener() {
+		botonAcceder = new JButton();
+		add(botonAcceder);
+		botonAcceder.setText("Acceder");
+		botonAcceder.setBounds(365, 261, 103, 28);
+		botonAcceder.setFont(new Font("Calibri", Font.BOLD, 14));
+		botonAcceder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				BotonPINActionPerformed(evt);
+				BotonAccederActionPerformed(evt);
 			}
 		});
 
@@ -109,6 +112,22 @@ public class AdministrarPrestamos extends javax.swing.JPanel{
 		labelPassword.setText("Password");
 		labelPassword.setBounds(217, 203, 73, 16);
 		add(labelPassword);
+		
+		
+		String[] opciones = { "Seleccione una operación","Creación de prestamos", "Pago de cuotas", "Listado de clientes morosos"};
+		menu = new JComboBox(opciones);
+		menu.setSelectedIndex(0);
+		menu.setBackground(Color.WHITE);
+		menu.setFont(new Font("Calibri", Font.BOLD, 14));
+		menu.setBounds(161, 150, 250, 23);
+		menu.setVisible(false);
+		menu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				menuActionPerformed(evt);
+			}
+		});
+		add(menu);
+		
 
 	}
 	
@@ -148,7 +167,7 @@ public class AdministrarPrestamos extends javax.swing.JPanel{
 //		}      
 	}
 	
-	private void BotonPINActionPerformed(ActionEvent evt) {
+	private void BotonAccederActionPerformed(ActionEvent evt) {
 		//Obtengo datos legajo y password
 		String legajo= textLegajo.getText();
 		String password= fieldPassword.getText();
@@ -158,41 +177,53 @@ public class AdministrarPrestamos extends javax.swing.JPanel{
 			textLegajo.setText("");  
 		}
 		else{
-			try {
+			//try {
 				String pinBD= "";
 				//verificar si el pin es valido para la tarjeta
 				
 				//se crea una sentencia jdbc para realizar la consulta
-				java.sql.Statement stmt = cnx.createStatement();
-				System.out.println("Base de datos conectada \n");
+//				java.sql.Statement stmt = cnx.createStatement();
+//				System.out.println("Base de datos conectada \n");
+//				
+//				//se prepara el string SQL de la consulta
+//				String sql= "SELECT password"
+//							+ "	FROM Empleado"
+//							+ "WHERE legajo=1" ;		///////comparar con el legajo obtenido del textfield
+//				
+//				//se ejecuta la sentencia y se recibe un resultado
+//				java.sql.ResultSet rs = stmt.executeQuery(sql);
+//				
+//				rs.next();	//avanzo a la primer fila de la tabla del resultado a la consulta
+//				//hay solo una fila ya que busque un legajo particular, el cual es clave en la tabla empleado
+//				String passwordBD=rs.getString("password");
+//
+//				rs.close();
+//				stmt.close();
+//				
+				//Se ingreso el legajo y password correctos (iria en el if)
+				textLegajo.setVisible(false);
+				fieldPassword.setVisible(false);
+				botonAcceder.setVisible(false);
+				labelLegajo.setVisible(false);
+				labelPassword.setVisible(false);
 				
-				//se prepara el string SQL de la consulta
-				String sql= "SELECT password"
-							+ "	FROM Empleado"
-							+ "WHERE legajo=1" ;		///////comparar con el legajo obtenido del textfield
+				menu.setVisible(true);
+						
 				
-				//se ejecuta la sentencia y se recibe un resultado
-				java.sql.ResultSet rs = stmt.executeQuery(sql);
 				
-				rs.next();	//avanzo a la primer fila de la tabla del resultado a la consulta
-				//hay solo una fila ya que busque un legajo particular, el cual es clave en la tabla empleado
-				String passwordBD=rs.getString("password");
-
-				rs.close();
-				stmt.close();
+//				if(passwordBD.equals(password)){
+//					System.out.println("Coinciden");
+//				}
+//				else{
+//					JOptionPane.showMessageDialog(null, "Legajo o password incorrecto", "Datos invalidos", JOptionPane.ERROR_MESSAGE);
+//					textLegajo.setText("");
+//					fieldPassword.setText("");
+//				}
 				
-				if(passwordBD.equals(password)){
-					System.out.println("Coinciden");
-					//MOSTRAR MENU CON OPCIONES
-				}
-				else{
-					JOptionPane.showMessageDialog(null, "Legajo o password incorrecto", "Datos invalidos", JOptionPane.ERROR_MESSAGE);
-					textLegajo.setText("");
-					fieldPassword.setText("");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+				
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
 		}
 		
 	}
@@ -205,6 +236,22 @@ public class AdministrarPrestamos extends javax.swing.JPanel{
 		textLegajo.setText("");
 	}
 	
-	
+	private void menuActionPerformed(ActionEvent evt){
+		 String opcionSeleccionada = (String) menu.getSelectedItem();
+		 switch (opcionSeleccionada){
+		 	case  "Creación de prestamos": {
+		 		System.out.println("seleccione creacion de prestamos");
+		 		break;
+		 	}
+		 	case  "Pago de cuotas": {
+		 		System.out.println("seleccione Pago de cuotas");
+		 		break;
+		 	}
+		 	case  "Listado de clientes morosos": {
+		 		System.out.println("seleccione Listado de clientes morosos");
+		 		break;
+		 	}
+		 }
+	}
 }
 
