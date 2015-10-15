@@ -33,6 +33,8 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	private JPanel panelPrincipal;
 	private Consultas consultas;
 	private CajeroAutomatico cajero;
+	private AdministrarPrestamos adminPrestamos;
+	
 	
 
 	//Constructor
@@ -100,6 +102,9 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 		//Creo el panel cajero automatico
 		cajeroAutomatico();
 		
+		//Creo el panel de administracion de prestamos
+		adminPrestamos();
+		
 	}
 	
 	public void crearConsultas(){
@@ -115,21 +120,31 @@ public class VentanaPrincipal extends javax.swing.JFrame  {
 	    panelPrincipal.add(cajero);
 	    consultas.setVisible(false);
 	}
+	
+	public void adminPrestamos(){
+		adminPrestamos = new AdministrarPrestamos();
+		adminPrestamos.setLocation(0, 34);
+	    panelPrincipal.add(adminPrestamos);
+	    adminPrestamos.setVisible(false);
+	}
+	
 
 	private void BotonConsultasActionPerformed(ActionEvent evt) {
 		consultas.setVisible(true);	
 		cajero.setVisible(false);
+		adminPrestamos.setVisible(false);
 	}
 
 	private void BotonCajeroActionPerformed(ActionEvent evt) {
 		consultas.setVisible(false);
 		cajero.setVisible(true);
+		adminPrestamos.setVisible(false);
 	}
 
 	private void BotonPrestamoActionPerformed(ActionEvent evt) {
-//		consultas.setVisible(true);	
-//		System.out.println("BotonPrestamo.actionPerformed, event="+evt);
-
+		consultas.setVisible(false);	
+		adminPrestamos.setVisible(true);
+		cajero.setVisible(false);
 	}
 	
 	
